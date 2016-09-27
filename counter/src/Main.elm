@@ -14,25 +14,45 @@ main =
         }
 
 
+
+-- MODEL
+
+
+type alias Model =
+    Int
+
+
+model : Model
+model =
+    0
+
+
+
+-- UPDATE
+
+
 type Msg
-    = Inc
-    | Dec
+    = Increment
+    | Decrement
 
 
-update : Msg -> number -> number
+update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Inc ->
-            model + 1
+        Increment ->
+            model + 2
 
-        Dec ->
-            model - 1
+        Decrement ->
+            model - 2
+
+
+-- VIEW
 
 
 view : a -> Html Msg
 view model =
     div []
-        [ button [ onClick Inc ] [ text "+" ]
+        [ button [ onClick Increment ] [ text "+" ]
         , div [] [ text (toString model) ]
-        , button [ onClick Dec ] [ text "-" ]
+        , button [ onClick Decrement ] [ text "-" ]
         ]
