@@ -46,10 +46,11 @@ update msg model =
             model - 2
 
 
+
 -- VIEW
 
 
-view : a -> Html Msg
+view : Model -> Html Msg
 view model =
     div []
         [ button [ onClick Increment ] [ text "+" ]
