@@ -3,24 +3,32 @@ module Counter exposing (..)
 import Test exposing (..)
 import Expect
 import String
+import Main exposing (..)
 
 
-dummy : Test
-dummy =
-    describe "A Test Suite"
-        [ test "Addition" <|
+updateHelper : Msg -> Model
+updateHelper msg =
+    let
+        model : Model
+        model =
+            0
+    in
+        update msg model
+
+
+updateTest : Test
+updateTest =
+    describe "Update"
+        [ test "Increment" <|
             \() ->
-                Expect.equal (3 + 7) 10
-        , test "String.left" <|
+                Expect.equal (updateHelper Increment) 2
+        , test "Decrement" <|
             \() ->
-                Expect.equal "a" (String.left 1 "abcdefg")
-        , test "This test should fail" <|
-            \() ->
-                Expect.fail "failed as expected!"
+                Expect.equal (updateHelper Decrement) -2
         ]
 
 
 all : Test
 all =
     describe "Counter"
-        [ dummy ]
+        [ updateTest ]

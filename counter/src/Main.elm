@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Main exposing (main, update, Model, Msg(..))
 
 import Html.App as App
 import Html exposing (Html, div, button, text)
