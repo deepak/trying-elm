@@ -1,12 +1,12 @@
-module Tests exposing (..)
+module Counter exposing (..)
 
 import Test exposing (..)
 import Expect
 import String
 
 
-all : Test
-all =
+dummy : Test
+dummy =
     describe "A Test Suite"
         [ test "Addition" <|
             \() ->
@@ -18,3 +18,9 @@ all =
             \() ->
                 Expect.fail "failed as expected!"
         ]
+
+
+all : Test
+all =
+    describe "Counter"
+        [ dummy ]
