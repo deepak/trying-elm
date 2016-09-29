@@ -8,7 +8,7 @@ import Html.Events exposing (onClick)
 main : Program Never
 main =
     App.beginnerProgram
-        { model = 0
+        { model = initialModel
         , update = update
         , view = view
         }
@@ -22,8 +22,8 @@ type alias Model =
     Int
 
 
-model : Model
-model =
+initialModel : Model
+initialModel =
     0
 
 
