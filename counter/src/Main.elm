@@ -34,6 +34,7 @@ initialModel =
 type Msg
     = Increment
     | Decrement
+    | Reset
 
 
 update : Msg -> Model -> Model
@@ -44,6 +45,9 @@ update msg model =
 
         Decrement ->
             model - 2
+
+        Reset ->
+            initialModel
 
 
 

@@ -6,12 +6,12 @@ import String
 import Main exposing (..)
 
 
-updateHelper : Msg -> Model
-updateHelper msg =
+updateHelper : Msg -> Int -> Model
+updateHelper msg initialState =
     let
         model : Model
         model =
-            0
+            initialState
     in
         update msg model
 
@@ -21,10 +21,13 @@ updateTest =
     describe "Update"
         [ test "Increment" <|
             \() ->
-                Expect.equal (updateHelper Increment) 2
+                Expect.equal (updateHelper Increment 0) 2
         , test "Decrement" <|
             \() ->
-                Expect.equal (updateHelper Decrement) -2
+                Expect.equal (updateHelper Decrement 0) -2
+        , test "Reset" <|
+            \() ->
+                Expect.equal (updateHelper Reset 100) 0
         ]
 
 
