@@ -22,7 +22,10 @@ main =
 
 
 type alias Model =
-    { bumpBy : { value : Maybe Int }
+    { bumpBy :
+        { value : Maybe Int
+        , display : String
+        }
     , counter : Int
     , err : Maybe String
     }
@@ -31,7 +34,10 @@ type alias Model =
 initialModel : Model
 initialModel =
     { counter = 0
-    , bumpBy = { value = Just 1 }
+    , bumpBy =
+        { value = Just 1
+        , display = "1"
+        }
     , err = Nothing
     }
 
@@ -73,10 +79,22 @@ update msg model =
             BumpBy bumpBy ->
                 case (String.toInt (Debug.log "bumpBy: " bumpBy)) of
                     Ok result ->
-                        { model | bumpBy = { value = Just result }, err = Nothing }
+                        { model
+                            | bumpBy =
+                                { value = Just result
+                                , display = bumpBy
+                                }
+                            , err = Nothing
+                        }
 
                     Err err ->
-                        { model | bumpBy = { value = Nothing }, err = Just err }
+                        { model
+                            | bumpBy =
+                                { value = Nothing
+                                , display = bumpBy
+                                }
+                            , err = Just err
+                        }
 
             Reset ->
                 initialModel
@@ -95,7 +113,7 @@ view model =
         , input
             [ type' "text"
             , onInput BumpBy
-            , value (formatBumpBy model.bumpBy.value)
+            , value model.bumpBy.display
             ]
             []
         , text (errorMessage model.err)
