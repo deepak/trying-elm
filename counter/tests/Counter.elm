@@ -6,7 +6,7 @@ import String
 import Main exposing (..)
 
 
-updateHelper : Msg -> Int -> Model
+updateHelper : Msg -> Int -> Int
 updateHelper msg counter =
     let
         model : Model
@@ -16,7 +16,7 @@ updateHelper msg counter =
             , err = Nothing
             }
     in
-        update msg model
+        update msg model |> .counter
 
 
 updateTest : Test
@@ -24,16 +24,31 @@ updateTest =
     describe "Update"
         [ test "Increment initial" <|
             \() ->
-                Expect.equal ((updateHelper Increment 0) |> .counter) 1
-        , test "Increment later" <|
+                Expect.equal (updateHelper Increment 0) 1
+        , test "Increment after 100" <|
             \() ->
-                Expect.equal ((updateHelper Increment 100) |> .counter) 101
-        , test "Decrement" <|
+                Expect.equal (updateHelper Increment 100) 101
+        , test "Increment after -1" <|
             \() ->
-                Expect.equal ((updateHelper Decrement 0) |> .counter) -1
-        , test "Reset" <|
+                Expect.equal (updateHelper Increment -1) 0
+        , test "Decrement initial" <|
             \() ->
-                Expect.equal ((updateHelper Reset 100) |> .counter) 0
+                Expect.equal (updateHelper Decrement 0) -1
+        , test "Decrement after 100" <|
+            \() ->
+                Expect.equal (updateHelper Decrement 100) 99
+        , test "Decrement after -1" <|
+            \() ->
+                Expect.equal (updateHelper Decrement -1) -2
+        , test "Reset initial" <|
+            \() ->
+                Expect.equal (updateHelper Reset 0) 0
+        , test "Reset after 100" <|
+            \() ->
+                Expect.equal (updateHelper Reset 100) 0
+        , test "Reset after -1" <|
+            \() ->
+                Expect.equal (updateHelper Reset -1) 0
         ]
 
 

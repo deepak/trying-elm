@@ -61,7 +61,7 @@ update msg model =
                 if bumpByValue == Nothing then
                     model
                 else
-                    { model | counter = (operator bumpBy model.counter) }
+                    { model | counter = (operator model.counter bumpBy) }
     in
         case msg of
             Increment ->
