@@ -22,7 +22,7 @@ main =
 
 
 type alias Model =
-    { bumpBy : Maybe Int
+    { bumpBy : { value : Maybe Int }
     , counter : Int
     , err : Maybe String
     }
@@ -31,7 +31,7 @@ type alias Model =
 initialModel : Model
 initialModel =
     { counter = 0
-    , bumpBy = Just 1
+    , bumpBy = { value = Just 1 }
     , err = Nothing
     }
 
@@ -50,12 +50,15 @@ type Msg
 update : Msg -> Model -> Model
 update msg model =
     let
+        bumpByValue =
+            model.bumpBy.value
+
         bumpBy =
-            (withDefault 0 model.bumpBy)
+            (withDefault 0 bumpByValue)
 
         checkBumpBy =
             \operator ->
-                if model.bumpBy == Nothing then
+                if bumpByValue == Nothing then
                     model
                 else
                     { model | counter = (operator bumpBy model.counter) }
@@ -70,10 +73,10 @@ update msg model =
             BumpBy bumpBy ->
                 case (String.toInt (Debug.log "bumpBy: " bumpBy)) of
                     Ok result ->
-                        { model | bumpBy = Just result, err = Nothing }
+                        { model | bumpBy = { value = Just result }, err = Nothing }
 
                     Err err ->
-                        { model | bumpBy = Nothing, err = Just err }
+                        { model | bumpBy = { value = Nothing }, err = Just err }
 
             Reset ->
                 initialModel
@@ -92,7 +95,7 @@ view model =
         , input
             [ type' "text"
             , onInput BumpBy
-            , value (bumpByValue model.bumpBy)
+            , value (formatBumpBy model.bumpBy.value)
             ]
             []
         , text (errorMessage model.err)
@@ -105,6 +108,6 @@ errorMessage err =
     (toString (withDefault "" err))
 
 
-bumpByValue : Maybe Int -> String
-bumpByValue bumpBy =
+formatBumpBy : Maybe Int -> String
+formatBumpBy bumpBy =
     (toString (withDefault 0 bumpBy))
