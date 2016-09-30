@@ -1,5 +1,6 @@
 -- https://guide.elm-lang.org/architecture/effects/random.html
 -- TODO: Exercises: Here are some that build on stuff that has already been introduced:
+-- TODO: Add tests. how to test Random ?
 --
 -- Instead of showing a number, show the die face as an image.
 -- Add a second die and have them both roll at the same time.
