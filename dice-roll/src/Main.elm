@@ -32,15 +32,25 @@ main =
 -- MODEL
 
 
-type alias Model =
+type alias Dice =
     { diceFace : Int
     , diceHistory : List Int
     }
 
 
+type alias Model =
+    { dices : List Dice }
+
+
 initialModel : ( Model, Cmd Msg )
 initialModel =
-    ( Model 1 [], Cmd.none )
+    ( { dices =
+            [ Dice 1 []
+            , Dice 1 []
+            ]
+      }
+    , Cmd.none
+    )
 
 
 
@@ -48,23 +58,32 @@ initialModel =
 
 
 type Msg
-    = Roll
-    | NewFace Int
+    = Roll1
+    | Roll2
+    | NewFace1 Int
+    | NewFace2
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Roll ->
-            ( model, Random.generate NewFace (Random.int 1 6) )
+        Roll1 ->
+            ( model, Random.generate NewFace1 (Random.int 1 6) )
 
-        NewFace newFace ->
+        NewFace1 newFace ->
             ( { model
-                | diceFace = newFace
-                , diceHistory = newFace :: model.diceHistory
+                | dices = List.map (\dice -> updateDice newFace dice) model.dices
               }
             , Cmd.none
             )
+
+
+updateDice : Int -> Dice -> Dice
+updateDice newFace dice =
+    { dice
+        | diceFace = newFace
+        , diceHistory = newFace :: dice.diceHistory
+    }
 
 
 
@@ -87,6 +106,15 @@ view model =
         , button [ onClick Roll ] [ text "Roll" ]
         , text (diceHistory model.diceHistory)
         , pre [] [ text (toString model) ]
+        ]
+
+
+viewDice : Dice -> Int -> Html Msg
+viewDice dice position =
+    div []
+        [ text (toString dice.diceFace)
+        , button [ onClick Roll ] [ text "Roll" ]
+        , text (diceHistory dice.diceHistory)
         ]
 
 
