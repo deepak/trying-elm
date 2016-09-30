@@ -1,3 +1,14 @@
+-- https://guide.elm-lang.org/architecture/effects/random.html
+-- TODO: Exercises: Here are some that build on stuff that has already been introduced:
+--
+-- Instead of showing a number, show the die face as an image.
+-- Add a second die and have them both roll at the same time.
+-- And here are some that require new skills:
+--
+-- Instead of showing an image of a die face, use the elm-lang/svg library to draw it yourself.
+-- After you have learned about tasks and animation, have the die flip around randomly before they settle on a final value.
+
+
 module Main exposing (..)
 
 import Html.App as App
